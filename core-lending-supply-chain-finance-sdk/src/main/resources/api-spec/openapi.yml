@@ -1,0 +1,1480 @@
+openapi: 3.0.1
+info:
+  title: core-lending-supply-chain-finance API
+  description: Supply Chain Finance Management System (Factoring & Confirming)
+  contact:
+    name: Firefly Software Solutions Inc
+    url: https://getfirefly.io
+    email: dev@getfirefly.io
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+    description: Local Development Server
+tags:
+  - name: SupplyChainFinanceAdvance
+    description: Operations for Supply Chain Finance Advances
+  - name: Counterparty
+    description: Operations for Counterparties (Debtors & Suppliers)
+  - name: SupplyChainFinanceInvoice
+    description: Operations for Supply Chain Finance Invoices
+  - name: SupplyChainFinanceFee
+    description: Operations for Supply Chain Finance Fees
+  - name: SupplyChainFinanceSettlement
+    description: Operations for Supply Chain Finance Settlements
+  - name: SupplyChainFinanceAgreement
+    description: Operations for Supply Chain Finance Agreements (Factoring & Confirming)
+paths:
+  /api/v1/supply-chain-finance/settlements/{id}:
+    get:
+      tags:
+        - SupplyChainFinanceSettlement
+      summary: Get a supply chain finance settlement by ID
+      description: Retrieve a specific settlement by its unique identifier
+      operationId: getById
+      parameters:
+        - name: id
+          in: path
+          description: Unique identifier of the settlement
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: X-Idempotency-Key
+          in: header
+          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Settlement found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SupplyChainFinanceSettlementDTO'
+        '404':
+          description: Settlement not found
+    put:
+      tags:
+        - SupplyChainFinanceSettlement
+      summary: Update an existing supply chain finance settlement
+      description: Update the details of an existing settlement
+      operationId: update
+      parameters:
+        - name: id
+          in: path
+          description: Unique identifier of the settlement
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: X-Idempotency-Key
+          in: header
+          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SupplyChainFinanceSettlementDTO'
+        required: true
+      responses:
+        '200':
+          description: Settlement updated successfully
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SupplyChainFinanceSettlementDTO'
+        '400':
+          description: Invalid settlement data
+        '404':
+          description: Settlement not found
+    delete:
+      tags:
+        - SupplyChainFinanceSettlement
+      summary: Delete a supply chain finance settlement
+      description: Delete a settlement from the system
+      operationId: delete
+      parameters:
+        - name: id
+          in: path
+          description: Unique identifier of the settlement
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: X-Idempotency-Key
+          in: header
+          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
+          required: false
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Settlement deleted successfully
+        '404':
+          description: Settlement not found
+  /api/v1/supply-chain-finance/invoices/{id}:
+    get:
+      tags:
+        - SupplyChainFinanceInvoice
+      summary: Get a supply chain finance invoice by ID
+      description: Retrieve a specific invoice by its unique identifier
+      operationId: getById_1
+      parameters:
+        - name: id
+          in: path
+          description: Unique identifier of the invoice
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: X-Idempotency-Key
+          in: header
+          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Invoice found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SupplyChainFinanceInvoiceDTO'
+        '404':
+          description: Invoice not found
+    put:
+      tags:
+        - SupplyChainFinanceInvoice
+      summary: Update an existing supply chain finance invoice
+      description: Update the details of an existing invoice
+      operationId: update_1
+      parameters:
+        - name: id
+          in: path
+          description: Unique identifier of the invoice
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: X-Idempotency-Key
+          in: header
+          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SupplyChainFinanceInvoiceDTO'
+        required: true
+      responses:
+        '200':
+          description: Invoice updated successfully
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SupplyChainFinanceInvoiceDTO'
+        '400':
+          description: Invalid invoice data
+        '404':
+          description: Invoice not found
+    delete:
+      tags:
+        - SupplyChainFinanceInvoice
+      summary: Delete a supply chain finance invoice
+      description: Delete an invoice from the system
+      operationId: delete_1
+      parameters:
+        - name: id
+          in: path
+          description: Unique identifier of the invoice
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: X-Idempotency-Key
+          in: header
+          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
+          required: false
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Invoice deleted successfully
+        '404':
+          description: Invoice not found
+  /api/v1/supply-chain-finance/fees/{id}:
+    get:
+      tags:
+        - SupplyChainFinanceFee
+      summary: Get a supply chain finance fee by ID
+      description: Retrieve a specific fee by its unique identifier
+      operationId: getById_2
+      parameters:
+        - name: id
+          in: path
+          description: Unique identifier of the fee
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: X-Idempotency-Key
+          in: header
+          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Fee found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SupplyChainFinanceFeeDTO'
+        '404':
+          description: Fee not found
+    put:
+      tags:
+        - SupplyChainFinanceFee
+      summary: Update an existing supply chain finance fee
+      description: Update the details of an existing fee
+      operationId: update_2
+      parameters:
+        - name: id
+          in: path
+          description: Unique identifier of the fee
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: X-Idempotency-Key
+          in: header
+          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SupplyChainFinanceFeeDTO'
+        required: true
+      responses:
+        '200':
+          description: Fee updated successfully
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SupplyChainFinanceFeeDTO'
+        '400':
+          description: Invalid fee data
+        '404':
+          description: Fee not found
+    delete:
+      tags:
+        - SupplyChainFinanceFee
+      summary: Delete a supply chain finance fee
+      description: Delete a fee from the system
+      operationId: delete_2
+      parameters:
+        - name: id
+          in: path
+          description: Unique identifier of the fee
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: X-Idempotency-Key
+          in: header
+          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
+          required: false
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Fee deleted successfully
+        '404':
+          description: Fee not found
+  /api/v1/supply-chain-finance/counterparties/{id}:
+    get:
+      tags:
+        - Counterparty
+      summary: Get a counterparty by ID
+      description: Retrieve a specific counterparty by its unique identifier
+      operationId: getById_3
+      parameters:
+        - name: id
+          in: path
+          description: Unique identifier of the counterparty
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: X-Idempotency-Key
+          in: header
+          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Counterparty found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CounterpartyDTO'
+        '404':
+          description: Counterparty not found
+    put:
+      tags:
+        - Counterparty
+      summary: Update an existing counterparty
+      description: Update the details of an existing counterparty
+      operationId: update_3
+      parameters:
+        - name: id
+          in: path
+          description: Unique identifier of the counterparty
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: X-Idempotency-Key
+          in: header
+          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CounterpartyDTO'
+        required: true
+      responses:
+        '200':
+          description: Counterparty updated successfully
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CounterpartyDTO'
+        '400':
+          description: Invalid counterparty data
+        '404':
+          description: Counterparty not found
+    delete:
+      tags:
+        - Counterparty
+      summary: Delete a counterparty
+      description: Delete a counterparty from the system
+      operationId: delete_3
+      parameters:
+        - name: id
+          in: path
+          description: Unique identifier of the counterparty
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: X-Idempotency-Key
+          in: header
+          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
+          required: false
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Counterparty deleted successfully
+        '404':
+          description: Counterparty not found
+  /api/v1/supply-chain-finance/agreements/{id}:
+    get:
+      tags:
+        - SupplyChainFinanceAgreement
+      summary: Get a supply chain finance agreement by ID
+      description: Retrieve a specific agreement by its unique identifier
+      operationId: getById_4
+      parameters:
+        - name: id
+          in: path
+          description: Unique identifier of the agreement
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: X-Idempotency-Key
+          in: header
+          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Agreement found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SupplyChainFinanceAgreementDTO'
+        '404':
+          description: Agreement not found
+    put:
+      tags:
+        - SupplyChainFinanceAgreement
+      summary: Update an existing supply chain finance agreement
+      description: Update the details of an existing agreement
+      operationId: update_4
+      parameters:
+        - name: id
+          in: path
+          description: Unique identifier of the agreement
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: X-Idempotency-Key
+          in: header
+          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SupplyChainFinanceAgreementDTO'
+        required: true
+      responses:
+        '200':
+          description: Agreement updated successfully
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SupplyChainFinanceAgreementDTO'
+        '400':
+          description: Invalid agreement data
+        '404':
+          description: Agreement not found
+    delete:
+      tags:
+        - SupplyChainFinanceAgreement
+      summary: Delete a supply chain finance agreement
+      description: Delete an agreement from the system
+      operationId: delete_4
+      parameters:
+        - name: id
+          in: path
+          description: Unique identifier of the agreement
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: X-Idempotency-Key
+          in: header
+          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
+          required: false
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Agreement deleted successfully
+        '404':
+          description: Agreement not found
+  /api/v1/supply-chain-finance/advances/{id}:
+    get:
+      tags:
+        - SupplyChainFinanceAdvance
+      summary: Get a supply chain finance advance by ID
+      description: Retrieve a specific advance by its unique identifier
+      operationId: getById_5
+      parameters:
+        - name: id
+          in: path
+          description: Unique identifier of the advance
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: X-Idempotency-Key
+          in: header
+          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Advance found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SupplyChainFinanceAdvanceDTO'
+        '404':
+          description: Advance not found
+    put:
+      tags:
+        - SupplyChainFinanceAdvance
+      summary: Update an existing supply chain finance advance
+      description: Update the details of an existing advance
+      operationId: update_5
+      parameters:
+        - name: id
+          in: path
+          description: Unique identifier of the advance
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: X-Idempotency-Key
+          in: header
+          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SupplyChainFinanceAdvanceDTO'
+        required: true
+      responses:
+        '200':
+          description: Advance updated successfully
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SupplyChainFinanceAdvanceDTO'
+        '400':
+          description: Invalid advance data
+        '404':
+          description: Advance not found
+    delete:
+      tags:
+        - SupplyChainFinanceAdvance
+      summary: Delete a supply chain finance advance
+      description: Delete an advance from the system
+      operationId: delete_5
+      parameters:
+        - name: id
+          in: path
+          description: Unique identifier of the advance
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: X-Idempotency-Key
+          in: header
+          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
+          required: false
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Advance deleted successfully
+        '404':
+          description: Advance not found
+  /api/v1/supply-chain-finance/settlements:
+    get:
+      tags:
+        - SupplyChainFinanceSettlement
+      summary: List/Search supply chain finance settlements
+      description: Retrieve a paginated list of settlements based on filter criteria
+      operationId: findAll
+      parameters:
+        - name: filterRequest
+          in: query
+          description: Filter criteria for settlements
+          required: true
+          schema:
+            $ref: '#/components/schemas/FilterRequestSupplyChainFinanceSettlementDTO'
+        - name: X-Idempotency-Key
+          in: header
+          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully retrieved settlements
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PaginationResponse'
+        '400':
+          description: Invalid filter request
+    post:
+      tags:
+        - SupplyChainFinanceSettlement
+      summary: Create a new supply chain finance settlement
+      description: Create a new settlement in the system
+      operationId: create
+      parameters:
+        - name: X-Idempotency-Key
+          in: header
+          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SupplyChainFinanceSettlementDTO'
+        required: true
+      responses:
+        '200':
+          description: Settlement created successfully
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SupplyChainFinanceSettlementDTO'
+        '400':
+          description: Invalid settlement data
+  /api/v1/supply-chain-finance/invoices:
+    get:
+      tags:
+        - SupplyChainFinanceInvoice
+      summary: List/Search supply chain finance invoices
+      description: Retrieve a paginated list of invoices based on filter criteria
+      operationId: findAll_1
+      parameters:
+        - name: filterRequest
+          in: query
+          description: Filter criteria for invoices
+          required: true
+          schema:
+            $ref: '#/components/schemas/FilterRequestSupplyChainFinanceInvoiceDTO'
+        - name: X-Idempotency-Key
+          in: header
+          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully retrieved invoices
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PaginationResponse'
+        '400':
+          description: Invalid filter request
+    post:
+      tags:
+        - SupplyChainFinanceInvoice
+      summary: Create a new supply chain finance invoice
+      description: Create a new invoice in the system
+      operationId: create_1
+      parameters:
+        - name: X-Idempotency-Key
+          in: header
+          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SupplyChainFinanceInvoiceDTO'
+        required: true
+      responses:
+        '200':
+          description: Invoice created successfully
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SupplyChainFinanceInvoiceDTO'
+        '400':
+          description: Invalid invoice data
+  /api/v1/supply-chain-finance/fees:
+    get:
+      tags:
+        - SupplyChainFinanceFee
+      summary: List/Search supply chain finance fees
+      description: Retrieve a paginated list of fees based on filter criteria
+      operationId: findAll_2
+      parameters:
+        - name: filterRequest
+          in: query
+          description: Filter criteria for fees
+          required: true
+          schema:
+            $ref: '#/components/schemas/FilterRequestSupplyChainFinanceFeeDTO'
+        - name: X-Idempotency-Key
+          in: header
+          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully retrieved fees
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PaginationResponse'
+        '400':
+          description: Invalid filter request
+    post:
+      tags:
+        - SupplyChainFinanceFee
+      summary: Create a new supply chain finance fee
+      description: Create a new fee in the system
+      operationId: create_2
+      parameters:
+        - name: X-Idempotency-Key
+          in: header
+          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SupplyChainFinanceFeeDTO'
+        required: true
+      responses:
+        '200':
+          description: Fee created successfully
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SupplyChainFinanceFeeDTO'
+        '400':
+          description: Invalid fee data
+  /api/v1/supply-chain-finance/counterparties:
+    get:
+      tags:
+        - Counterparty
+      summary: List/Search counterparties
+      description: Retrieve a paginated list of counterparties based on filter criteria
+      operationId: findAll_3
+      parameters:
+        - name: filterRequest
+          in: query
+          description: Filter criteria for counterparties
+          required: true
+          schema:
+            $ref: '#/components/schemas/FilterRequestCounterpartyDTO'
+        - name: X-Idempotency-Key
+          in: header
+          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully retrieved counterparties
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PaginationResponse'
+        '400':
+          description: Invalid filter request
+    post:
+      tags:
+        - Counterparty
+      summary: Create a new counterparty
+      description: Create a new counterparty in the system
+      operationId: create_3
+      parameters:
+        - name: X-Idempotency-Key
+          in: header
+          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CounterpartyDTO'
+        required: true
+      responses:
+        '200':
+          description: Counterparty created successfully
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CounterpartyDTO'
+        '400':
+          description: Invalid counterparty data
+  /api/v1/supply-chain-finance/agreements:
+    get:
+      tags:
+        - SupplyChainFinanceAgreement
+      summary: List/Search supply chain finance agreements
+      description: Retrieve a paginated list of supply chain finance agreements based on filter criteria
+      operationId: findAll_4
+      parameters:
+        - name: filterRequest
+          in: query
+          description: Filter criteria for agreements
+          required: true
+          schema:
+            $ref: '#/components/schemas/FilterRequestSupplyChainFinanceAgreementDTO'
+        - name: X-Idempotency-Key
+          in: header
+          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully retrieved agreements
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PaginationResponse'
+        '400':
+          description: Invalid filter request
+    post:
+      tags:
+        - SupplyChainFinanceAgreement
+      summary: Create a new supply chain finance agreement
+      description: Create a new supply chain finance agreement in the system
+      operationId: create_4
+      parameters:
+        - name: X-Idempotency-Key
+          in: header
+          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SupplyChainFinanceAgreementDTO'
+        required: true
+      responses:
+        '200':
+          description: Agreement created successfully
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SupplyChainFinanceAgreementDTO'
+        '400':
+          description: Invalid agreement data
+  /api/v1/supply-chain-finance/advances:
+    get:
+      tags:
+        - SupplyChainFinanceAdvance
+      summary: List/Search supply chain finance advances
+      description: Retrieve a paginated list of advances based on filter criteria
+      operationId: findAll_5
+      parameters:
+        - name: filterRequest
+          in: query
+          description: Filter criteria for advances
+          required: true
+          schema:
+            $ref: '#/components/schemas/FilterRequestSupplyChainFinanceAdvanceDTO'
+        - name: X-Idempotency-Key
+          in: header
+          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully retrieved advances
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PaginationResponse'
+        '400':
+          description: Invalid filter request
+    post:
+      tags:
+        - SupplyChainFinanceAdvance
+      summary: Create a new supply chain finance advance
+      description: Create a new advance in the system
+      operationId: create_5
+      parameters:
+        - name: X-Idempotency-Key
+          in: header
+          description: Unique key for idempotent requests. If provided, ensures that identical requests with the same key will only be processed once.
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SupplyChainFinanceAdvanceDTO'
+        required: true
+      responses:
+        '200':
+          description: Advance created successfully
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SupplyChainFinanceAdvanceDTO'
+        '400':
+          description: Invalid advance data
+components:
+  schemas:
+    SupplyChainFinanceSettlementDTO:
+      required:
+        - currency
+        - financeType
+        - invoiceId
+        - settlementAmount
+        - settlementDate
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        financeType:
+          type: string
+          enum:
+            - FACTORING
+            - CONFIRMING
+        invoiceId:
+          type: string
+          format: uuid
+        settlementDate:
+          type: string
+          format: date
+        currency:
+          type: string
+          enum:
+            - EUR
+            - USD
+            - GBP
+            - CHF
+            - JPY
+            - CNY
+        settlementAmount:
+          type: number
+        advancedAmount:
+          type: number
+        interestAmount:
+          type: number
+        feeAmount:
+          type: number
+        balanceDue:
+          type: number
+        paymentReference:
+          maxLength: 100
+          minLength: 0
+          type: string
+        notes:
+          maxLength: 2000
+          minLength: 0
+          type: string
+    SupplyChainFinanceInvoiceDTO:
+      required:
+        - agreementId
+        - counterpartyId
+        - currency
+        - dueDate
+        - financeType
+        - invoiceAmount
+        - invoiceDate
+        - invoiceNumber
+        - status
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        financeType:
+          type: string
+          enum:
+            - FACTORING
+            - CONFIRMING
+        agreementId:
+          type: string
+          format: uuid
+        counterpartyId:
+          type: string
+          format: uuid
+        invoiceNumber:
+          maxLength: 100
+          minLength: 0
+          type: string
+        invoiceDate:
+          type: string
+          format: date
+        dueDate:
+          type: string
+          format: date
+        currency:
+          type: string
+          enum:
+            - EUR
+            - USD
+            - GBP
+            - CHF
+            - JPY
+            - CNY
+        invoiceAmount:
+          type: number
+        status:
+          type: string
+          enum:
+            - REGISTERED
+            - PENDING_VERIFICATION
+            - VERIFIED
+            - APPROVED
+            - REJECTED
+            - FINANCED
+            - CONFIRMED
+            - PAID
+            - SETTLED
+            - CANCELLED
+        financedAmount:
+          type: number
+        financedDate:
+          type: string
+          format: date
+        paidDate:
+          type: string
+          format: date
+        verificationNotes:
+          maxLength: 2000
+          minLength: 0
+          type: string
+        rejectionReason:
+          maxLength: 500
+          minLength: 0
+          type: string
+        purchaseOrderNumber:
+          maxLength: 100
+          minLength: 0
+          type: string
+        deliveryNoteNumber:
+          maxLength: 100
+          minLength: 0
+          type: string
+        notes:
+          maxLength: 2000
+          minLength: 0
+          type: string
+    SupplyChainFinanceFeeDTO:
+      required:
+        - agreementId
+        - currency
+        - feeType
+        - financeType
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        financeType:
+          type: string
+          enum:
+            - FACTORING
+            - CONFIRMING
+        agreementId:
+          type: string
+          format: uuid
+        feeType:
+          type: string
+          enum:
+            - DISCOUNT_FEE
+            - SERVICE_FEE
+            - ADMINISTRATION_FEE
+            - VERIFICATION_FEE
+            - EARLY_PAYMENT_FEE
+            - COLLECTION_FEE
+            - LATE_PAYMENT_FEE
+            - OTHER
+        currency:
+          type: string
+          enum:
+            - EUR
+            - USD
+            - GBP
+            - CHF
+            - JPY
+            - CNY
+        fixedAmount:
+          type: number
+        percentageRate:
+          maximum: 100
+          exclusiveMaximum: false
+          minimum: 0
+          exclusiveMinimum: false
+          type: number
+        minimumAmount:
+          type: number
+        maximumAmount:
+          type: number
+        description:
+          maxLength: 500
+          minLength: 0
+          type: string
+    CounterpartyDTO:
+      required:
+        - agreementId
+        - counterpartyName
+        - financeType
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        agreementId:
+          type: string
+          format: uuid
+        financeType:
+          type: string
+          enum:
+            - FACTORING
+            - CONFIRMING
+        counterpartyName:
+          maxLength: 255
+          minLength: 0
+          type: string
+        taxId:
+          maxLength: 50
+          minLength: 0
+          type: string
+        registrationNumber:
+          maxLength: 50
+          minLength: 0
+          type: string
+        address:
+          maxLength: 500
+          minLength: 0
+          type: string
+        contactPerson:
+          maxLength: 255
+          minLength: 0
+          type: string
+        contactEmail:
+          maxLength: 255
+          minLength: 0
+          type: string
+        contactPhone:
+          maxLength: 50
+          minLength: 0
+          type: string
+        approved:
+          type: boolean
+        approvedLimit:
+          type: number
+        currentExposure:
+          type: number
+        creditRating:
+          maxLength: 50
+          minLength: 0
+          type: string
+        notes:
+          maxLength: 2000
+          minLength: 0
+          type: string
+    SupplyChainFinanceAgreementDTO:
+      required:
+        - agreementNumber
+        - currency
+        - financeType
+        - loanServicingCaseId
+        - startDate
+        - status
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        financeType:
+          type: string
+          enum:
+            - FACTORING
+            - CONFIRMING
+        agreementNumber:
+          maxLength: 100
+          minLength: 0
+          type: string
+        loanServicingCaseId:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+            - DRAFT
+            - PENDING_APPROVAL
+            - ACTIVE
+            - SUSPENDED
+            - TERMINATED
+            - CLOSED
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+        currency:
+          type: string
+          enum:
+            - EUR
+            - USD
+            - GBP
+            - CHF
+            - JPY
+            - CNY
+        creditLimit:
+          type: number
+        availableLimit:
+          type: number
+        outstandingAmount:
+          type: number
+        recourse:
+          type: boolean
+        notificationRequired:
+          type: boolean
+        advanceRate:
+          maximum: 100
+          exclusiveMaximum: false
+          minimum: 0
+          exclusiveMinimum: false
+          type: number
+        supplierEarlyPaymentOption:
+          type: boolean
+        standardPaymentTermDays:
+          type: integer
+          format: int32
+        earlyPaymentDiscountDays:
+          type: integer
+          format: int32
+        interestRate:
+          maximum: 100
+          exclusiveMaximum: false
+          minimum: 0
+          exclusiveMinimum: false
+          type: number
+        notes:
+          maxLength: 2000
+          minLength: 0
+          type: string
+        createdBy:
+          type: string
+          format: uuid
+        lastModifiedBy:
+          type: string
+          format: uuid
+    SupplyChainFinanceAdvanceDTO:
+      required:
+        - advanceAmount
+        - advanceDate
+        - currency
+        - financeType
+        - invoiceId
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        financeType:
+          type: string
+          enum:
+            - FACTORING
+            - CONFIRMING
+        invoiceId:
+          type: string
+          format: uuid
+        advanceDate:
+          type: string
+          format: date
+        currency:
+          type: string
+          enum:
+            - EUR
+            - USD
+            - GBP
+            - CHF
+            - JPY
+            - CNY
+        advanceAmount:
+          type: number
+        discountAmount:
+          type: number
+        feeAmount:
+          type: number
+        netAmount:
+          type: number
+        paymentReference:
+          maxLength: 100
+          minLength: 0
+          type: string
+        notes:
+          maxLength: 2000
+          minLength: 0
+          type: string
+    FilterOptions:
+      type: object
+      properties:
+        caseInsensitiveStrings:
+          type: boolean
+        includeInheritedFields:
+          type: boolean
+      description: Filter options for customizing filter behavior
+    FilterRequestSupplyChainFinanceSettlementDTO:
+      required:
+        - pagination
+      type: object
+      properties:
+        filters:
+          $ref: '#/components/schemas/SupplyChainFinanceSettlementDTO'
+        rangeFilters:
+          $ref: '#/components/schemas/RangeFilter'
+        pagination:
+          $ref: '#/components/schemas/PaginationRequest'
+        options:
+          $ref: '#/components/schemas/FilterOptions'
+      description: Generic filter request that includes both filter criteria and pagination
+    PaginationRequest:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          description: The zero-based page number to retrieve.
+          format: int32
+          example: 0
+          default: 0
+        pageSize:
+          type: integer
+          description: The number of items per page.
+          format: int32
+          example: 10
+          default: 10
+        sortBy:
+          type: string
+          description: The field to sort the results by.
+          example: name
+        sortDirection:
+          type: string
+          description: The direction of sorting, either ASC or DESC.
+          example: DESC
+          default: DESC
+      description: Represents a pagination request for retrieving paginated results, including page number, size, sort field, and direction.
+    RangeFilter:
+      type: object
+      properties:
+        ranges:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/RangeObject'
+          description: Map of field names to their range criteria
+      description: Represents range filters for numeric fields
+    RangeObject:
+      type: object
+      properties:
+        from:
+          type: object
+          description: Start value of the range
+        to:
+          type: object
+          description: End value of the range
+      description: Represents a range with from and to values
+    PaginationResponse:
+      type: object
+      properties:
+        content:
+          type: array
+          description: The list of items for the current page.
+          items:
+            type: object
+            description: The list of items for the current page.
+        totalElements:
+          type: integer
+          description: The total number of elements across all pages.
+          format: int64
+        totalPages:
+          type: integer
+          description: The total number of pages based on the data size and page size.
+          format: int32
+        currentPage:
+          type: integer
+          description: The current page number, typically zero-based.
+          format: int32
+      description: Represents a paginated response containing a list of items and pagination metadata.
+    FilterRequestSupplyChainFinanceInvoiceDTO:
+      required:
+        - pagination
+      type: object
+      properties:
+        filters:
+          $ref: '#/components/schemas/SupplyChainFinanceInvoiceDTO'
+        rangeFilters:
+          $ref: '#/components/schemas/RangeFilter'
+        pagination:
+          $ref: '#/components/schemas/PaginationRequest'
+        options:
+          $ref: '#/components/schemas/FilterOptions'
+      description: Generic filter request that includes both filter criteria and pagination
+    FilterRequestSupplyChainFinanceFeeDTO:
+      required:
+        - pagination
+      type: object
+      properties:
+        filters:
+          $ref: '#/components/schemas/SupplyChainFinanceFeeDTO'
+        rangeFilters:
+          $ref: '#/components/schemas/RangeFilter'
+        pagination:
+          $ref: '#/components/schemas/PaginationRequest'
+        options:
+          $ref: '#/components/schemas/FilterOptions'
+      description: Generic filter request that includes both filter criteria and pagination
+    FilterRequestCounterpartyDTO:
+      required:
+        - pagination
+      type: object
+      properties:
+        filters:
+          $ref: '#/components/schemas/CounterpartyDTO'
+        rangeFilters:
+          $ref: '#/components/schemas/RangeFilter'
+        pagination:
+          $ref: '#/components/schemas/PaginationRequest'
+        options:
+          $ref: '#/components/schemas/FilterOptions'
+      description: Generic filter request that includes both filter criteria and pagination
+    FilterRequestSupplyChainFinanceAgreementDTO:
+      required:
+        - pagination
+      type: object
+      properties:
+        filters:
+          $ref: '#/components/schemas/SupplyChainFinanceAgreementDTO'
+        rangeFilters:
+          $ref: '#/components/schemas/RangeFilter'
+        pagination:
+          $ref: '#/components/schemas/PaginationRequest'
+        options:
+          $ref: '#/components/schemas/FilterOptions'
+      description: Generic filter request that includes both filter criteria and pagination
+    FilterRequestSupplyChainFinanceAdvanceDTO:
+      required:
+        - pagination
+      type: object
+      properties:
+        filters:
+          $ref: '#/components/schemas/SupplyChainFinanceAdvanceDTO'
+        rangeFilters:
+          $ref: '#/components/schemas/RangeFilter'
+        pagination:
+          $ref: '#/components/schemas/PaginationRequest'
+        options:
+          $ref: '#/components/schemas/FilterOptions'
+      description: Generic filter request that includes both filter criteria and pagination
