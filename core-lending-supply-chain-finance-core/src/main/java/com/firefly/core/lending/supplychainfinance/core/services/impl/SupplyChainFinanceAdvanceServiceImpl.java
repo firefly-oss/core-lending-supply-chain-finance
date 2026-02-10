@@ -5,8 +5,8 @@
 
 package com.firefly.core.lending.supplychainfinance.core.services.impl;
 
-import com.firefly.common.core.filters.*;
-import com.firefly.common.core.queries.PaginationResponse;
+import org.fireflyframework.core.filters.*;
+import org.fireflyframework.core.queries.PaginationResponse;
 import com.firefly.core.lending.supplychainfinance.core.mappers.SupplyChainFinanceAdvanceMapper;
 import com.firefly.core.lending.supplychainfinance.core.services.SupplyChainFinanceAdvanceService;
 import com.firefly.core.lending.supplychainfinance.interfaces.dtos.SupplyChainFinanceAdvanceDTO;

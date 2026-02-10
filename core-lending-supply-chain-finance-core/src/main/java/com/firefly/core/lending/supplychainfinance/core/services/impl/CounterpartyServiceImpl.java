@@ -17,9 +17,9 @@
 
 package com.firefly.core.lending.supplychainfinance.core.services.impl;
 
-import com.firefly.common.core.filters.FilterRequest;
-import com.firefly.common.core.filters.FilterUtils;
-import com.firefly.common.core.queries.PaginationResponse;
+import org.fireflyframework.core.filters.FilterRequest;
+import org.fireflyframework.core.filters.FilterUtils;
+import org.fireflyframework.core.queries.PaginationResponse;
 import com.firefly.core.lending.supplychainfinance.core.mappers.CounterpartyMapper;
 import com.firefly.core.lending.supplychainfinance.core.services.CounterpartyService;
 import com.firefly.core.lending.supplychainfinance.interfaces.dtos.CounterpartyDTO;

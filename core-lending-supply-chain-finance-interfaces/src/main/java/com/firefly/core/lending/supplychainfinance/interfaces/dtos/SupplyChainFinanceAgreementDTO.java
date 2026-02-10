@@ -19,12 +19,12 @@ package com.firefly.core.lending.supplychainfinance.interfaces.dtos;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.firefly.annotations.ValidAmount;
-import com.firefly.annotations.ValidDate;
+import org.fireflyframework.annotations.ValidAmount;
+import org.fireflyframework.annotations.ValidDate;
 import com.firefly.core.lending.supplychainfinance.interfaces.enums.AgreementStatusEnum;
 import com.firefly.core.lending.supplychainfinance.interfaces.enums.CurrencyCodeEnum;
 import com.firefly.core.lending.supplychainfinance.interfaces.enums.FinanceTypeEnum;
-import com.firefly.core.utils.annotations.FilterableId;
+import org.fireflyframework.utils.annotations.FilterableId;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
