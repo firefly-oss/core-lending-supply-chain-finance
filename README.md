@@ -1,7 +1,7 @@
 # Core Lending Supply Chain Finance
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Java](https://img.shields.io/badge/Java-21-orange.svg)](https://openjdk.java.net/)
+[![Java](https://img.shields.io/badge/Java-25-orange.svg)](https://openjdk.java.net/)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-brightgreen.svg)](https://spring.io/projects/spring-boot)
 
 A unified microservice for managing both **factoring** and **confirming** supply chain finance operations within the Firefly lending platform.
@@ -45,11 +45,11 @@ A unified microservice for managing both **factoring** and **confirming** supply
 This microservice consolidates the previously separate `core-lending-factoring` and `core-lending-confirming` services into a single, unified codebase. The two modules shared approximately 85% of their code, making this merge a significant improvement in maintainability and consistency.
 
 **Key Benefits:**
-- ✅ 85% code reduction through elimination of duplication
-- ✅ Unified API for both factoring and confirming
-- ✅ Single deployment reduces operational complexity
-- ✅ Easier maintenance with one codebase
-- ✅ Consistent business logic across finance types
+- 85% code reduction through elimination of duplication
+- Unified API for both factoring and confirming
+- Single deployment reduces operational complexity
+- Easier maintenance with one codebase
+- Consistent business logic across finance types
 
 ---
 
@@ -81,11 +81,11 @@ The complete lifecycle of a supply chain finance operation follows this flow:
    ↓
 2. Debtor (Counterparty) Registered & Approved
    ↓
-3. 📄 INVOICE Registered
+3. INVOICE Registered
    │  Status: REGISTERED → PENDING_VERIFICATION → VERIFIED → APPROVED
    │  Tracks: Invoice details, debtor, amounts, due dates
    ↓
-4. 💰 ADVANCE to Supplier
+4. ADVANCE to Supplier
    │  Advance amount = Invoice amount × Advance rate
    │  Deducts: Discount fees, service fees
    │  Net amount paid to supplier
@@ -95,7 +95,7 @@ The complete lifecycle of a supply chain finance operation follows this flow:
 6. Debtor Pays Invoice (at due date)
    │  Status: PAID
    ↓
-7. 📋 SETTLEMENT
+7. SETTLEMENT
    │  Calculates: Settlement amount - Advanced amount - Interest - Fees
    │  Balance due paid to supplier (if positive) or collected from supplier (if negative)
    ↓
@@ -109,13 +109,13 @@ The complete lifecycle of a supply chain finance operation follows this flow:
    ↓
 2. Supplier (Counterparty) Registered & Approved
    ↓
-3. 📄 INVOICE Registered by Buyer
+3. INVOICE Registered by Buyer
    │  Status: REGISTERED → PENDING_VERIFICATION → VERIFIED → CONFIRMED
    │  Tracks: Invoice details, supplier, amounts, payment terms
    ↓
 4. Supplier Requests Early Payment (Optional)
    ↓
-5. 💰 EARLY PAYMENT to Supplier
+5. EARLY PAYMENT to Supplier
    │  Early payment amount = Invoice amount - Discount
    │  Deducts: Early payment fees
    │  Net amount paid to supplier
@@ -125,7 +125,7 @@ The complete lifecycle of a supply chain finance operation follows this flow:
 7. Buyer Pays at Standard Payment Term
    │  Status: PAID
    ↓
-8. 📋 SETTLEMENT
+8. SETTLEMENT
    │  Reconciles payment from buyer
    │  Calculates final amounts
    ↓
@@ -163,7 +163,7 @@ core-lending-supply-chain-finance/
 
 ### Technology Stack
 
-- **Language**: Java 21
+- **Language**: Java 25
 - **Framework**: Spring Boot 3.x with Spring WebFlux (Reactive)
 - **Database**: PostgreSQL with R2DBC (Reactive Database Connectivity)
 - **Migration**: Flyway
@@ -661,7 +661,7 @@ All endpoints are prefixed with `/api/v1` and support reactive (non-blocking) op
 
 ### Prerequisites
 
-- **Java 21** or higher
+- **Java 25** or higher
 - **Maven 3.8+**
 - **PostgreSQL 14+**
 - **Docker** (optional, for local PostgreSQL)
