@@ -1,0 +1,17 @@
+com/firefly/core/lending/supplychainfinance/interfaces/dtos/SupplyChainFinanceInvoiceDTO$SupplyChainFinanceInvoiceDTOBuilder.class
+com/firefly/core/lending/supplychainfinance/interfaces/dtos/CounterpartyDTO$CounterpartyDTOBuilder.class
+com/firefly/core/lending/supplychainfinance/interfaces/enums/CurrencyCodeEnum.class
+com/firefly/core/lending/supplychainfinance/interfaces/enums/FeeTypeEnum.class
+com/firefly/core/lending/supplychainfinance/interfaces/enums/FinanceTypeEnum.class
+com/firefly/core/lending/supplychainfinance/interfaces/dtos/SupplyChainFinanceSettlementDTO.class
+com/firefly/core/lending/supplychainfinance/interfaces/dtos/SupplyChainFinanceFeeDTO.class
+com/firefly/core/lending/supplychainfinance/interfaces/dtos/CounterpartyDTO.class
+com/firefly/core/lending/supplychainfinance/interfaces/dtos/SupplyChainFinanceFeeDTO$SupplyChainFinanceFeeDTOBuilder.class
+com/firefly/core/lending/supplychainfinance/interfaces/dtos/SupplyChainFinanceAgreementDTO$SupplyChainFinanceAgreementDTOBuilder.class
+com/firefly/core/lending/supplychainfinance/interfaces/dtos/SupplyChainFinanceAgreementDTO.class
+com/firefly/core/lending/supplychainfinance/interfaces/enums/AgreementStatusEnum.class
+com/firefly/core/lending/supplychainfinance/interfaces/dtos/SupplyChainFinanceAdvanceDTO.class
+com/firefly/core/lending/supplychainfinance/interfaces/dtos/SupplyChainFinanceAdvanceDTO$SupplyChainFinanceAdvanceDTOBuilder.class
+com/firefly/core/lending/supplychainfinance/interfaces/dtos/SupplyChainFinanceSettlementDTO$SupplyChainFinanceSettlementDTOBuilder.class
+com/firefly/core/lending/supplychainfinance/interfaces/enums/InvoiceStatusEnum.class
+com/firefly/core/lending/supplychainfinance/interfaces/dtos/SupplyChainFinanceInvoiceDTO.class
