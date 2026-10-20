@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.firefly</groupId>
+        <groupId>io.fireflysoftware</groupId>
         <artifactId>firefly-parent</artifactId>
-        <version>26.10.2</version>
+        <version>26.10.3</version>
         <relativePath/>
     </parent>
 
@@ -30,34 +30,34 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.compiler.release>${java.version}</maven.compiler.release>
-        <core-lending-supply-chain-finance.version>26.10.2</core-lending-supply-chain-finance.version>
+        <core-lending-supply-chain-finance.version>26.10.3</core-lending-supply-chain-finance.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
             <!-- Internal modules -->
             <dependency>
-                <groupId>com.firefly</groupId>
+                <groupId>io.fireflysoftware</groupId>
                 <artifactId>core-lending-supply-chain-finance-interfaces</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.firefly</groupId>
+                <groupId>io.fireflysoftware</groupId>
                 <artifactId>core-lending-supply-chain-finance-models</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.firefly</groupId>
+                <groupId>io.fireflysoftware</groupId>
                 <artifactId>core-lending-supply-chain-finance-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.firefly</groupId>
+                <groupId>io.fireflysoftware</groupId>
                 <artifactId>core-lending-supply-chain-finance-web</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.firefly</groupId>
+                <groupId>io.fireflysoftware</groupId>
                 <artifactId>core-lending-supply-chain-finance-sdk</artifactId>
                 <version>${project.version}</version>
             </dependency>

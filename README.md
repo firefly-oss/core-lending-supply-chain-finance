@@ -362,7 +362,7 @@ The core entity representing a factoring or confirming agreement.
 - `createdBy` (UUID): User who created the agreement
 - `lastModifiedBy` (UUID): User who last modified the agreement
 
-**DTO:** `SupplyChainFinanceAgreementDTO` in `com.firefly.core.lending.supplychainfinance.interfaces.dtos`
+**DTO:** `SupplyChainFinanceAgreementDTO` in `io.fireflysoftware.core.lending.supplychainfinance.interfaces.dtos`
 
 ---
 
@@ -386,7 +386,7 @@ Represents debtors in factoring or suppliers in confirming.
 - `currentExposure` (BigDecimal): Current exposure amount
 - `creditRating` (String): Credit rating (max 20 chars)
 
-**DTO:** `CounterpartyDTO` in `com.firefly.core.lending.supplychainfinance.interfaces.dtos`
+**DTO:** `CounterpartyDTO` in `io.fireflysoftware.core.lending.supplychainfinance.interfaces.dtos`
 
 ---
 
@@ -413,7 +413,7 @@ Represents invoices in both factoring and confirming workflows.
 - `purchaseOrderNumber` (String): PO number (max 100 chars)
 - `deliveryNoteNumber` (String): Delivery note number (max 100 chars)
 
-**DTO:** `SupplyChainFinanceInvoiceDTO` in `com.firefly.core.lending.supplychainfinance.interfaces.dtos`
+**DTO:** `SupplyChainFinanceInvoiceDTO` in `io.fireflysoftware.core.lending.supplychainfinance.interfaces.dtos`
 
 ---
 
@@ -434,7 +434,7 @@ Represents advances to suppliers in factoring or early payments in confirming.
 - `netAmount` (BigDecimal): Net amount paid to supplier
 - `paymentReference` (String): Payment reference (max 200 chars)
 
-**DTO:** `SupplyChainFinanceAdvanceDTO` in `com.firefly.core.lending.supplychainfinance.interfaces.dtos`
+**DTO:** `SupplyChainFinanceAdvanceDTO` in `io.fireflysoftware.core.lending.supplychainfinance.interfaces.dtos`
 
 ---
 
@@ -454,7 +454,7 @@ Represents fee structures for agreements.
 - `maximumAmount` (BigDecimal): Maximum fee
 - `description` (String): Fee description (max 500 chars)
 
-**DTO:** `SupplyChainFinanceFeeDTO` in `com.firefly.core.lending.supplychainfinance.interfaces.dtos`
+**DTO:** `SupplyChainFinanceFeeDTO` in `io.fireflysoftware.core.lending.supplychainfinance.interfaces.dtos`
 
 ---
 
@@ -475,7 +475,7 @@ Represents final settlement of invoices.
 - `balanceDue` (BigDecimal): Final balance (positive = pay to supplier, negative = collect from supplier)
 - `paymentReference` (String): Payment reference (max 200 chars)
 
-**DTO:** `SupplyChainFinanceSettlementDTO` in `com.firefly.core.lending.supplychainfinance.interfaces.dtos`
+**DTO:** `SupplyChainFinanceSettlementDTO` in `io.fireflysoftware.core.lending.supplychainfinance.interfaces.dtos`
 
 ---
 
@@ -489,7 +489,7 @@ Distinguishes between factoring and confirming operations.
 - `FACTORING`: Invoice factoring
 - `CONFIRMING`: Reverse factoring / Confirming
 
-**Package:** `com.firefly.core.lending.supplychainfinance.interfaces.enums`
+**Package:** `io.fireflysoftware.core.lending.supplychainfinance.interfaces.enums`
 
 ---
 
@@ -505,7 +505,7 @@ Represents the current status of a supply chain finance agreement.
 - `TERMINATED`: Agreement was terminated early
 - `CLOSED`: Agreement has been closed normally
 
-**Package:** `com.firefly.core.lending.supplychainfinance.interfaces.enums`
+**Package:** `io.fireflysoftware.core.lending.supplychainfinance.interfaces.enums`
 
 ---
 
@@ -525,7 +525,7 @@ Represents the current status of an invoice.
 - `SETTLED`: Invoice has been fully settled
 - `CANCELLED`: Invoice was cancelled
 
-**Package:** `com.firefly.core.lending.supplychainfinance.interfaces.enums`
+**Package:** `io.fireflysoftware.core.lending.supplychainfinance.interfaces.enums`
 
 ---
 
@@ -543,7 +543,7 @@ Categorizes different types of fees.
 - `LATE_PAYMENT_FEE`: Late payment penalty fee
 - `OTHER`: Other fees
 
-**Package:** `com.firefly.core.lending.supplychainfinance.interfaces.enums`
+**Package:** `io.fireflysoftware.core.lending.supplychainfinance.interfaces.enums`
 
 ---
 
@@ -559,7 +559,7 @@ ISO 4217 currency codes supported.
 - `JPY`: Japanese Yen
 - `CNY`: Chinese Yuan
 
-**Package:** `com.firefly.core.lending.supplychainfinance.interfaces.enums`
+**Package:** `io.fireflysoftware.core.lending.supplychainfinance.interfaces.enums`
 
 ---
 
