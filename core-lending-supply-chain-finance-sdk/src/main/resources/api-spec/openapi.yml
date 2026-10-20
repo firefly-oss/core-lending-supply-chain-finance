@@ -4,8 +4,8 @@ info:
   description: Supply Chain Finance Management System (Factoring & Confirming)
   contact:
     name: Firefly Software Foundation
-    url: https://getfirefly.io
-    email: dev@getfirefly.io
+    url: https://fireflysoftware.io
+    email: dev@fireflysoftware.io
   license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0
