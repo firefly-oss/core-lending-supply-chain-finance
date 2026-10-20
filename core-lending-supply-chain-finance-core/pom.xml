@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>core-lending-supply-chain-finance-core</artifactId>
+    <name>core-lending-supply-chain-finance-core</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
