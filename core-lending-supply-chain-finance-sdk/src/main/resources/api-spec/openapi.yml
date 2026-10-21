@@ -949,13 +949,10 @@ components:
           format: date
         currency:
           type: string
-          enum:
-            - EUR
-            - USD
-            - GBP
-            - CHF
-            - JPY
-            - CNY
+          minLength: 3
+          maxLength: 3
+          pattern: ^[A-Z]{3}$
+          description: ISO 4217 currency code
         settlementAmount:
           type: number
         advancedAmount:
@@ -1014,13 +1011,10 @@ components:
           format: date
         currency:
           type: string
-          enum:
-            - EUR
-            - USD
-            - GBP
-            - CHF
-            - JPY
-            - CNY
+          minLength: 3
+          maxLength: 3
+          pattern: ^[A-Z]{3}$
+          description: ISO 4217 currency code
         invoiceAmount:
           type: number
         status:
@@ -1097,13 +1091,10 @@ components:
             - OTHER
         currency:
           type: string
-          enum:
-            - EUR
-            - USD
-            - GBP
-            - CHF
-            - JPY
-            - CNY
+          minLength: 3
+          maxLength: 3
+          pattern: ^[A-Z]{3}$
+          description: ISO 4217 currency code
         fixedAmount:
           type: number
         percentageRate:
@@ -1123,8 +1114,8 @@ components:
     CounterpartyDTO:
       required:
         - agreementId
-        - counterpartyName
         - financeType
+        - partyId
       type: object
       properties:
         id:
@@ -1139,6 +1130,10 @@ components:
           enum:
             - FACTORING
             - CONFIRMING
+        partyId:
+          type: string
+          format: uuid
+          description: Party in customer management. This row is a role on the agreement, not a customer master.
         counterpartyName:
           maxLength: 255
           minLength: 0
@@ -1224,13 +1219,10 @@ components:
           format: date
         currency:
           type: string
-          enum:
-            - EUR
-            - USD
-            - GBP
-            - CHF
-            - JPY
-            - CNY
+          minLength: 3
+          maxLength: 3
+          pattern: ^[A-Z]{3}$
+          description: ISO 4217 currency code
         creditLimit:
           type: number
         availableLimit:
@@ -1297,13 +1289,10 @@ components:
           format: date
         currency:
           type: string
-          enum:
-            - EUR
-            - USD
-            - GBP
-            - CHF
-            - JPY
-            - CNY
+          minLength: 3
+          maxLength: 3
+          pattern: ^[A-Z]{3}$
+          description: ISO 4217 currency code
         advanceAmount:
           type: number
         discountAmount:

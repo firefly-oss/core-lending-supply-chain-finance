@@ -21,7 +21,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.fireflyframework.annotations.ValidAmount;
 import org.fireflyframework.annotations.ValidDate;
-import io.fireflysoftware.core.lending.supplychainfinance.interfaces.enums.CurrencyCodeEnum;
 import io.fireflysoftware.core.lending.supplychainfinance.interfaces.enums.FinanceTypeEnum;
 import io.fireflysoftware.core.lending.supplychainfinance.interfaces.enums.InvoiceStatusEnum;
 import org.fireflyframework.utils.annotations.FilterableId;
@@ -73,7 +72,8 @@ public class SupplyChainFinanceInvoiceDTO {
     private LocalDate dueDate;
 
     @NotNull(message = "Currency is required")
-    private CurrencyCodeEnum currency;
+    @Pattern(regexp = "^[A-Z]{3}$", message = "Currency must be a 3-letter ISO 4217 code")
+    private String currency;
 
     @NotNull(message = "Invoice amount is required")
     @Positive(message = "Invoice amount must be positive")

@@ -20,7 +20,6 @@ package io.fireflysoftware.core.lending.supplychainfinance.interfaces.dtos;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.fireflyframework.annotations.ValidAmount;
-import io.fireflysoftware.core.lending.supplychainfinance.interfaces.enums.CurrencyCodeEnum;
 import io.fireflysoftware.core.lending.supplychainfinance.interfaces.enums.FeeTypeEnum;
 import io.fireflysoftware.core.lending.supplychainfinance.interfaces.enums.FinanceTypeEnum;
 import org.fireflyframework.utils.annotations.FilterableId;
@@ -57,7 +56,8 @@ public class SupplyChainFinanceFeeDTO {
     private FeeTypeEnum feeType;
 
     @NotNull(message = "Currency is required")
-    private CurrencyCodeEnum currency;
+    @Pattern(regexp = "^[A-Z]{3}$", message = "Currency must be a 3-letter ISO 4217 code")
+    private String currency;
 
     @PositiveOrZero(message = "Fixed amount must be zero or positive")
     @ValidAmount(message = "Fixed amount must be a valid amount")

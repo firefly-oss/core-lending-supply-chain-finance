@@ -22,7 +22,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.fireflyframework.annotations.ValidAmount;
 import org.fireflyframework.annotations.ValidDate;
 import io.fireflysoftware.core.lending.supplychainfinance.interfaces.enums.AgreementStatusEnum;
-import io.fireflysoftware.core.lending.supplychainfinance.interfaces.enums.CurrencyCodeEnum;
 import io.fireflysoftware.core.lending.supplychainfinance.interfaces.enums.FinanceTypeEnum;
 import org.fireflyframework.utils.annotations.FilterableId;
 import jakarta.validation.constraints.*;
@@ -71,7 +70,8 @@ public class SupplyChainFinanceAgreementDTO {
     private LocalDate endDate;
 
     @NotNull(message = "Currency is required")
-    private CurrencyCodeEnum currency;
+    @Pattern(regexp = "^[A-Z]{3}$", message = "Currency must be a 3-letter ISO 4217 code")
+    private String currency;
 
     @PositiveOrZero(message = "Credit limit must be zero or positive")
     @ValidAmount(message = "Credit limit must be a valid amount")

@@ -51,7 +51,10 @@ public class CounterpartyDTO {
     @NotNull(message = "Finance type is required")
     private FinanceTypeEnum financeType;
 
-    @NotBlank(message = "Counterparty name is required")
+    @NotNull(message = "Party ID is required")
+    @FilterableId
+    private UUID partyId;
+
     @Size(max = 255, message = "Counterparty name cannot exceed 255 characters")
     private String counterpartyName;
 

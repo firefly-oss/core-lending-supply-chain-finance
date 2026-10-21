@@ -1,6 +1,5 @@
 package io.fireflysoftware.core.lending.supplychainfinance.models.entities;
 
-import io.fireflysoftware.core.lending.supplychainfinance.interfaces.enums.CurrencyCodeEnum;
 import io.fireflysoftware.core.lending.supplychainfinance.interfaces.enums.FinanceTypeEnum;
 import io.fireflysoftware.core.lending.supplychainfinance.interfaces.enums.InvoiceStatusEnum;
 import lombok.AllArgsConstructor;
@@ -50,7 +49,7 @@ public class SupplyChainFinanceInvoice {
     private LocalDate dueDate;
 
     @Column("currency")
-    private CurrencyCodeEnum currency;
+    private String currency;
 
     @Column("invoice_amount")
     private BigDecimal invoiceAmount;

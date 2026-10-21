@@ -1,6 +1,5 @@
 package io.fireflysoftware.core.lending.supplychainfinance.models.entities;
 
-import io.fireflysoftware.core.lending.supplychainfinance.interfaces.enums.CurrencyCodeEnum;
 import io.fireflysoftware.core.lending.supplychainfinance.interfaces.enums.FeeTypeEnum;
 import io.fireflysoftware.core.lending.supplychainfinance.interfaces.enums.FinanceTypeEnum;
 import lombok.AllArgsConstructor;
@@ -39,7 +38,7 @@ public class SupplyChainFinanceFee {
     private FeeTypeEnum feeType;
 
     @Column("currency")
-    private CurrencyCodeEnum currency;
+    private String currency;
 
     @Column("fixed_amount")
     private BigDecimal fixedAmount;

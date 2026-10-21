@@ -50,6 +50,10 @@ public class CounterpartyServiceImpl implements CounterpartyService {
 
     @Override
     public Mono<CounterpartyDTO> create(CounterpartyDTO dto) {
+        if (dto.getPartyId() == null) {
+            return Mono.error(new IllegalStateException(
+                    "Counterparty must reference a party; customer details are owned by customer management"));
+        }
         return Mono.just(dto)
                 .map(mapper::toEntity)
                 .flatMap(repository::save)
@@ -66,6 +70,10 @@ public class CounterpartyServiceImpl implements CounterpartyService {
     public Mono<CounterpartyDTO> update(UUID id, CounterpartyDTO dto) {
         return repository.findById(id)
                 .flatMap(existing -> {
+                    if (dto.getPartyId() == null) {
+                        return Mono.error(new IllegalStateException(
+                                "Counterparty must reference a party; customer details are owned by customer management"));
+                    }
                     Counterparty updatedEntity = mapper.toEntity(dto);
                     updatedEntity.setId(existing.getId());
                     return repository.save(updatedEntity);

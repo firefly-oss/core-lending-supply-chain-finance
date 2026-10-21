@@ -34,6 +34,9 @@ public class Counterparty {
     @Column("finance_type")
     private FinanceTypeEnum financeType;
 
+    @Column("party_id")
+    private UUID partyId;
+
     @Column("counterparty_name")
     private String counterpartyName;
 

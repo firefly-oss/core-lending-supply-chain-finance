@@ -23,6 +23,7 @@ import org.fireflyframework.core.queries.PaginationResponse;
 import io.fireflysoftware.core.lending.supplychainfinance.core.mappers.SupplyChainFinanceAgreementMapper;
 import io.fireflysoftware.core.lending.supplychainfinance.core.services.SupplyChainFinanceAgreementService;
 import io.fireflysoftware.core.lending.supplychainfinance.interfaces.dtos.SupplyChainFinanceAgreementDTO;
+import io.fireflysoftware.core.lending.supplychainfinance.interfaces.enums.AgreementStatusEnum;
 import io.fireflysoftware.core.lending.supplychainfinance.interfaces.enums.FinanceTypeEnum;
 import io.fireflysoftware.core.lending.supplychainfinance.models.entities.SupplyChainFinanceAgreement;
 import io.fireflysoftware.core.lending.supplychainfinance.models.repositories.SupplyChainFinanceAgreementRepository;
@@ -56,6 +57,11 @@ public class SupplyChainFinanceAgreementServiceImpl implements SupplyChainFinanc
         return validateFinanceTypeSpecificFields(dto)
                 .then(Mono.just(dto))
                 .map(mapper::toEntity)
+                .doOnNext(entity -> {
+                    if (entity.getStatus() == null) {
+                        entity.setStatus(AgreementStatusEnum.DRAFT);
+                    }
+                })
                 .flatMap(repository::save)
                 .map(mapper::toDTO)
                 .doOnSuccess(created -> log.info("Created {} agreement with ID: {}",
@@ -73,8 +79,18 @@ public class SupplyChainFinanceAgreementServiceImpl implements SupplyChainFinanc
         return validateFinanceTypeSpecificFields(dto)
                 .then(repository.findById(id))
                 .flatMap(existingAgreement -> {
+                    AgreementStatusEnum current = existingAgreement.getStatus() != null
+                            ? existingAgreement.getStatus()
+                            : AgreementStatusEnum.DRAFT;
                     SupplyChainFinanceAgreement updatedEntity = mapper.toEntity(dto);
                     updatedEntity.setId(existingAgreement.getId());
+                    if (updatedEntity.getStatus() == null) {
+                        updatedEntity.setStatus(current);
+                    }
+                    if (!AgreementLifecycle.canTransition(current, updatedEntity.getStatus())) {
+                        return Mono.error(new IllegalStateException(
+                                "Agreement " + id + " cannot move from " + current + " to " + updatedEntity.getStatus()));
+                    }
                     return repository.save(updatedEntity);
                 })
                 .map(mapper::toDTO)
@@ -85,7 +101,17 @@ public class SupplyChainFinanceAgreementServiceImpl implements SupplyChainFinanc
     @Override
     public Mono<Void> delete(UUID id) {
         return repository.findById(id)
-                .flatMap(repository::delete)
+                .flatMap(existing -> {
+                    AgreementStatusEnum status = existing.getStatus() != null
+                            ? existing.getStatus()
+                            : AgreementStatusEnum.DRAFT;
+                    if (status != AgreementStatusEnum.DRAFT) {
+                        return Mono.error(new IllegalStateException(
+                                "Agreement " + id + " is " + status
+                                        + " and cannot be deleted; terminate it so the agreement history is kept"));
+                    }
+                    return repository.delete(existing);
+                })
                 .doOnSuccess(v -> log.info("Deleted agreement with ID: {}", id));
     }
 
