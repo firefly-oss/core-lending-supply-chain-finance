@@ -1,9 +1,9 @@
 <a href="https://fireflysoftware.io/openplatform/">
 <picture>
-  <source media="(max-width: 640px) and (prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/firefly-oss/.github/main/profile/assets/banner-narrow-dark.svg">
-  <source media="(max-width: 640px)" srcset="https://raw.githubusercontent.com/firefly-oss/.github/main/profile/assets/banner-narrow-light.svg">
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/firefly-oss/.github/main/profile/assets/banner-dark.svg">
-  <img src="https://raw.githubusercontent.com/firefly-oss/.github/main/profile/assets/banner-light.svg" alt="Firefly OpenPlatform - Core Lending - Supply Chain Finance" width="100%">
+  <source media="(max-width: 640px) and (prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/fireflysoftwaresolutions/.github/main/profile/assets/banner-narrow-dark.svg">
+  <source media="(max-width: 640px)" srcset="https://raw.githubusercontent.com/fireflysoftwaresolutions/.github/main/profile/assets/banner-narrow-light.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/fireflysoftwaresolutions/.github/main/profile/assets/banner-dark.svg">
+  <img src="https://raw.githubusercontent.com/fireflysoftwaresolutions/.github/main/profile/assets/banner-light.svg" alt="Firefly OpenPlatform - Core Lending - Supply Chain Finance" width="100%">
 </picture>
 </a>
 
@@ -218,7 +218,7 @@ erDiagram
         agreement_status_enum status "NOT NULL - Agreement status"
         date start_date "NOT NULL"
         date end_date "NOT NULL"
-        currency_code_enum currency "NOT NULL"
+        varchar(3) currency "ISO 4217"
         decimal credit_limit "NOT NULL - Maximum credit limit"
         decimal available_limit "NOT NULL - Available credit"
         decimal outstanding_amount "NOT NULL - Current outstanding"
@@ -240,7 +240,8 @@ erDiagram
         uuid id PK
         uuid agreement_id FK "NOT NULL"
         finance_type_enum finance_type "NOT NULL"
-        varchar counterparty_name "NOT NULL - Max 200 chars"
+        uuid party_id "Party in customer management"
+        varchar counterparty_name "NULLABLE - Label; the party is the customer record"
         varchar tax_id "NULLABLE - Max 50 chars"
         varchar registration_number "NULLABLE - Max 100 chars"
         text address "NULLABLE"
@@ -264,7 +265,7 @@ erDiagram
         varchar invoice_number "NOT NULL - Max 100 chars"
         date invoice_date "NOT NULL"
         date due_date "NOT NULL"
-        currency_code_enum currency "NOT NULL"
+        varchar(3) currency "ISO 4217"
         decimal invoice_amount "NOT NULL"
         invoice_status_enum status "NOT NULL"
         decimal financed_amount "NULLABLE - Amount financed/advanced"
@@ -284,7 +285,7 @@ erDiagram
         finance_type_enum finance_type "NOT NULL"
         uuid invoice_id FK "NOT NULL"
         date advance_date "NOT NULL"
-        currency_code_enum currency "NOT NULL"
+        varchar(3) currency "ISO 4217"
         decimal advance_amount "NOT NULL - Gross advance amount"
         decimal discount_amount "NULLABLE - Discount deducted"
         decimal fee_amount "NULLABLE - Fees deducted"
@@ -300,7 +301,7 @@ erDiagram
         finance_type_enum finance_type "NOT NULL"
         uuid agreement_id FK "NOT NULL"
         fee_type_enum fee_type "NOT NULL"
-        currency_code_enum currency "NOT NULL"
+        varchar(3) currency "ISO 4217"
         decimal fixed_amount "NULLABLE - Fixed fee amount"
         decimal percentage_rate "NULLABLE - Percentage rate (0-100)"
         decimal minimum_amount "NULLABLE - Minimum fee"
@@ -315,7 +316,7 @@ erDiagram
         finance_type_enum finance_type "NOT NULL"
         uuid invoice_id FK "NOT NULL"
         date settlement_date "NOT NULL"
-        currency_code_enum currency "NOT NULL"
+        varchar(3) currency "ISO 4217"
         decimal settlement_amount "NOT NULL - Total settlement amount"
         decimal advanced_amount "NOT NULL - Previously advanced"
         decimal interest_amount "NULLABLE - Interest charged"
@@ -342,7 +343,7 @@ The core entity representing a factoring or confirming agreement.
 - `status` (AgreementStatusEnum): Current status of the agreement
 - `startDate` (LocalDate): Agreement start date
 - `endDate` (LocalDate): Agreement end date
-- `currency` (CurrencyCodeEnum): Agreement currency
+- `currency` (ISO 4217 code): Agreement currency
 - `creditLimit` (BigDecimal): Maximum credit limit
 - `availableLimit` (BigDecimal): Available credit
 - `outstandingAmount` (BigDecimal): Current outstanding amount
@@ -374,7 +375,8 @@ Represents debtors in factoring or suppliers in confirming.
 - `id` (UUID, PK): Unique identifier
 - `agreementId` (UUID, FK): Parent agreement
 - `financeType` (FinanceTypeEnum): FACTORING or CONFIRMING
-- `counterpartyName` (String): Name of the counterparty (max 200 chars)
+- `partyId` (UUID): Party in customer management. Name, tax id, and registration number on this row are labels
+- `counterpartyName` (String): Optional label for the counterparty (max 200 chars)
 - `taxId` (String): Tax identification number (max 50 chars)
 - `registrationNumber` (String): Business registration number (max 100 chars)
 - `address` (String): Full address
@@ -402,7 +404,7 @@ Represents invoices in both factoring and confirming workflows.
 - `invoiceNumber` (String): Invoice number (max 100 chars)
 - `invoiceDate` (LocalDate): Invoice date
 - `dueDate` (LocalDate): Payment due date
-- `currency` (CurrencyCodeEnum): Invoice currency
+- `currency` (ISO 4217 code): Invoice currency
 - `invoiceAmount` (BigDecimal): Total invoice amount
 - `status` (InvoiceStatusEnum): Current invoice status
 - `financedAmount` (BigDecimal): Amount financed/advanced
@@ -427,7 +429,7 @@ Represents advances to suppliers in factoring or early payments in confirming.
 - `financeType` (FinanceTypeEnum): FACTORING or CONFIRMING
 - `invoiceId` (UUID, FK): Related invoice
 - `advanceDate` (LocalDate): Date of advance/early payment
-- `currency` (CurrencyCodeEnum): Currency
+- `currency` (ISO 4217 code): Currency
 - `advanceAmount` (BigDecimal): Gross advance amount
 - `discountAmount` (BigDecimal): Discount deducted
 - `feeAmount` (BigDecimal): Fees deducted
@@ -447,7 +449,7 @@ Represents fee structures for agreements.
 - `financeType` (FinanceTypeEnum): FACTORING or CONFIRMING
 - `agreementId` (UUID, FK): Parent agreement
 - `feeType` (FeeTypeEnum): Type of fee
-- `currency` (CurrencyCodeEnum): Currency
+- `currency` (ISO 4217 code): Currency
 - `fixedAmount` (BigDecimal): Fixed fee amount
 - `percentageRate` (BigDecimal): Percentage rate (0-100)
 - `minimumAmount` (BigDecimal): Minimum fee
@@ -467,7 +469,7 @@ Represents final settlement of invoices.
 - `financeType` (FinanceTypeEnum): FACTORING or CONFIRMING
 - `invoiceId` (UUID, FK): Related invoice
 - `settlementDate` (LocalDate): Settlement date
-- `currency` (CurrencyCodeEnum): Currency
+- `currency` (ISO 4217 code): Currency
 - `settlementAmount` (BigDecimal): Total settlement amount
 - `advancedAmount` (BigDecimal): Previously advanced amount
 - `interestAmount` (BigDecimal): Interest charged
@@ -504,6 +506,8 @@ Represents the current status of a supply chain finance agreement.
 - `SUSPENDED`: Agreement is temporarily suspended
 - `TERMINATED`: Agreement was terminated early
 - `CLOSED`: Agreement has been closed normally
+
+`DRAFT` may move to `PENDING_APPROVAL`, `ACTIVE`, or `TERMINATED`. `PENDING_APPROVAL` may return to `DRAFT` or move to `ACTIVE` or `TERMINATED`. `ACTIVE` may move to `SUSPENDED`, `CLOSED`, or `TERMINATED`. `SUSPENDED` may return to `ACTIVE` or move to `CLOSED` or `TERMINATED`. `CLOSED` and `TERMINATED` stay on file. Only a `DRAFT` agreement can be removed. Terminate an agreement that has left draft so the agreement history stays on file.
 
 **Package:** `io.fireflysoftware.core.lending.supplychainfinance.interfaces.enums`
 
@@ -547,19 +551,9 @@ Categorizes different types of fees.
 
 ---
 
-#### CurrencyCodeEnum
+#### Currency
 
-ISO 4217 currency codes supported.
-
-**Values:**
-- `EUR`: Euro
-- `USD`: US Dollar
-- `GBP`: British Pound
-- `CHF`: Swiss Franc
-- `JPY`: Japanese Yen
-- `CNY`: Chinese Yuan
-
-**Package:** `io.fireflysoftware.core.lending.supplychainfinance.interfaces.enums`
+Currency on an agreement, invoice, advance, fee, or settlement is any ISO 4217 alphabetic code, stored as `varchar(3)`.
 
 ---
 
@@ -577,7 +571,7 @@ All endpoints are prefixed with `/api/v1` and support reactive (non-blocking) op
 | POST | `/` | Create a new supply chain finance agreement |
 | GET | `/{id}` | Get agreement by ID |
 | PUT | `/{id}` | Update an existing agreement |
-| DELETE | `/{id}` | Delete an agreement |
+| DELETE | `/{id}` | Delete a draft agreement. An agreement that has left draft stays on file |
 
 **Controller:** `SupplyChainFinanceAgreementController`
 **Service:** `SupplyChainFinanceAgreementService`
@@ -740,7 +734,6 @@ core-lending-supply-chain-finance/
 │       │   └── SupplyChainFinanceSettlementDTO.java
 │       └── enums/          # Enumerations
 │           ├── AgreementStatusEnum.java
-│           ├── CurrencyCodeEnum.java
 │           ├── FeeTypeEnum.java
 │           ├── FinanceTypeEnum.java
 │           └── InvoiceStatusEnum.java
@@ -826,13 +819,10 @@ core-lending-supply-chain-finance-models/src/main/resources/db/migration/
 ```
 
 **Migration Files:**
-- `V1__Create_Enums.sql` - Creates custom enum types (finance_type, agreement_status, invoice_status, fee_type, currency_code)
-- `V2__Create_Agreement_Table.sql` - Creates supply_chain_finance_agreement table
-- `V3__Create_Counterparty_Table.sql` - Creates counterparty table
-- `V4__Create_Invoice_Table.sql` - Creates supply_chain_finance_invoice table
-- `V5__Create_Advance_Table.sql` - Creates supply_chain_finance_advance table
-- `V6__Create_Fee_Table.sql` - Creates supply_chain_finance_fee table
-- `V7__Create_Settlement_Table.sql` - Creates supply_chain_finance_settlement table
+- `V1__Create_Enums.sql` - Creates finance_type, agreement_status, invoice_status, and fee_type
+- `V2__Create_Tables.sql` - Creates the agreement, counterparty, invoice, advance, fee, and settlement tables
+- `V3__Create_Indexes.sql` - Creates indexes
+- `V4__Party_reference_and_currency.sql` - Points a counterparty at a party and stores currency as `varchar(3)`
 
 Migrations run automatically on application startup.
 
