@@ -6,7 +6,7 @@
     <parent>
         <groupId>io.fireflysoftware</groupId>
         <artifactId>core-lending-supply-chain-finance</artifactId>
-        <version>26.10.4</version>
+        <version>26.10.5</version>
     </parent>
 
     <artifactId>core-lending-supply-chain-finance-web</artifactId>
