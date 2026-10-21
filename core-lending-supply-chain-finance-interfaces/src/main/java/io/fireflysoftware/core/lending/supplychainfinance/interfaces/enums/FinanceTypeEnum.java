@@ -18,25 +18,17 @@
 package io.fireflysoftware.core.lending.supplychainfinance.interfaces.enums;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 /**
  * Product kind stored on a trade finance agreement.
  * FACTORING buys receivables. REVERSE_FACTORING pays suppliers after the buyer approves the payable.
  * Confirming is the Spanish market name for reverse factoring and is accepted on input as that kind.
+ * JSON uses the enum name.
  */
-@Getter
-@RequiredArgsConstructor
 public enum FinanceTypeEnum {
 
-    FACTORING("FACTORING", "Factoring"),
-    REVERSE_FACTORING("REVERSE_FACTORING", "Reverse factoring");
-
-    @JsonValue
-    private final String code;
-    private final String description;
+    FACTORING,
+    REVERSE_FACTORING;
 
     @JsonCreator
     public static FinanceTypeEnum fromCode(String code) {
@@ -47,15 +39,10 @@ public enum FinanceTypeEnum {
             return REVERSE_FACTORING;
         }
         for (FinanceTypeEnum type : values()) {
-            if (type.code.equalsIgnoreCase(code)) {
+            if (type.name().equalsIgnoreCase(code)) {
                 return type;
             }
         }
         throw new IllegalArgumentException("Invalid finance type: " + code);
-    }
-
-    @Override
-    public String toString() {
-        return this.code;
     }
 }
