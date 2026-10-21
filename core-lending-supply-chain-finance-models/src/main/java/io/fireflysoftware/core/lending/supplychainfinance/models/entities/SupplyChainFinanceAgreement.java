@@ -34,7 +34,7 @@ import java.util.UUID;
 
 /**
  * Unified entity for supply chain finance agreements.
- * Supports both FACTORING and CONFIRMING via financeType discriminator.
+ * Trade finance agreement. Product kinds are FACTORING and REVERSE_FACTORING.
  */
 @Data
 @Builder
@@ -87,7 +87,7 @@ public class SupplyChainFinanceAgreement {
     @Column("advance_rate")
     private BigDecimal advanceRate;
 
-    // Confirming-specific fields (nullable)
+    // Reverse factoring fields (nullable for factoring)
     @Column("supplier_early_payment_option")
     private Boolean supplierEarlyPaymentOption;
 

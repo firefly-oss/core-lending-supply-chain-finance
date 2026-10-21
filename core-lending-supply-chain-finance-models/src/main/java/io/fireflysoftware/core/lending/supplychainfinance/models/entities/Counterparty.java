@@ -32,7 +32,7 @@ import java.util.UUID;
 
 /**
  * Unified entity for counterparties.
- * Represents debtors in factoring, suppliers in confirming.
+ * Debtor on a factoring agreement, or supplier on a reverse factoring agreement.
  */
 @Data
 @Builder

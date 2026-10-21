@@ -24,7 +24,7 @@ import lombok.RequiredArgsConstructor;
 
 /**
  * Status for supply chain finance invoices.
- * Supports both factoring and confirming workflows.
+ * Invoice status for factoring and reverse factoring.
  */
 @Getter
 @RequiredArgsConstructor

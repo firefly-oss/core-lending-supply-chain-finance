@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: core-lending-supply-chain-finance API
-  description: Supply Chain Finance Management System (Factoring & Confirming)
+  description: Trade finance agreements. Product kinds: FACTORING and REVERSE_FACTORING.
   contact:
     name: Firefly Software Foundation
     url: https://fireflysoftware.io
@@ -25,7 +25,7 @@ tags:
   - name: SupplyChainFinanceSettlement
     description: Operations for Supply Chain Finance Settlements
   - name: SupplyChainFinanceAgreement
-    description: Operations for Supply Chain Finance Agreements (Factoring & Confirming)
+    description: Trade finance agreements. Product kinds: FACTORING and REVERSE_FACTORING.
 paths:
   /api/v1/supply-chain-finance/settlements/{id}:
     get:
@@ -940,7 +940,7 @@ components:
           type: string
           enum:
             - FACTORING
-            - CONFIRMING
+            - REVERSE_FACTORING
         invoiceId:
           type: string
           format: uuid
@@ -992,7 +992,7 @@ components:
           type: string
           enum:
             - FACTORING
-            - CONFIRMING
+            - REVERSE_FACTORING
         agreementId:
           type: string
           format: uuid
@@ -1074,7 +1074,7 @@ components:
           type: string
           enum:
             - FACTORING
-            - CONFIRMING
+            - REVERSE_FACTORING
         agreementId:
           type: string
           format: uuid
@@ -1129,7 +1129,7 @@ components:
           type: string
           enum:
             - FACTORING
-            - CONFIRMING
+            - REVERSE_FACTORING
         partyId:
           type: string
           format: uuid
@@ -1194,7 +1194,7 @@ components:
           type: string
           enum:
             - FACTORING
-            - CONFIRMING
+            - REVERSE_FACTORING
         agreementNumber:
           maxLength: 100
           minLength: 0
@@ -1280,7 +1280,7 @@ components:
           type: string
           enum:
             - FACTORING
-            - CONFIRMING
+            - REVERSE_FACTORING
         invoiceId:
           type: string
           format: uuid

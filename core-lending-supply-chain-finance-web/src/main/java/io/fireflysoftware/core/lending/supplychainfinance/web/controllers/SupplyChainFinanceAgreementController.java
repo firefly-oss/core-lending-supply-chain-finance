@@ -38,7 +38,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/supply-chain-finance/agreements")
-@Tag(name = "SupplyChainFinanceAgreement", description = "Operations for Supply Chain Finance Agreements (Factoring & Confirming)")
+@Tag(name = "SupplyChainFinanceAgreement", description = "Trade finance agreements. Product kinds: FACTORING and REVERSE_FACTORING.")
 @RequiredArgsConstructor
 public class SupplyChainFinanceAgreementController {
 

@@ -36,7 +36,7 @@ import java.util.UUID;
 
 /**
  * Unified DTO for supply chain finance agreements.
- * Supports both FACTORING and CONFIRMING types via financeType discriminator.
+ * Trade finance agreement. Product kinds are FACTORING and REVERSE_FACTORING.
  */
 @Data
 @Builder
@@ -93,7 +93,7 @@ public class SupplyChainFinanceAgreementDTO {
     @DecimalMax(value = "100.0", inclusive = true, message = "Advance rate cannot exceed 100")
     private BigDecimal advanceRate;
 
-    // Confirming-specific fields (nullable)
+    // Reverse factoring fields (nullable for factoring)
     private Boolean supplierEarlyPaymentOption;
 
     @Positive(message = "Standard payment term days must be positive")

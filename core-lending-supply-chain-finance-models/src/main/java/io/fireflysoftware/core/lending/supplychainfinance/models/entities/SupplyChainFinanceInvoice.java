@@ -34,7 +34,7 @@ import java.util.UUID;
 
 /**
  * Unified entity for supply chain finance invoices.
- * Supports both factoring and confirming invoice workflows.
+ * Invoice under a factoring or reverse factoring agreement.
  */
 @Data
 @Builder

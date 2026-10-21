@@ -23,7 +23,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 /**
- * Status for supply chain finance agreements (both factoring and confirming).
+ * Status for a trade finance agreement (factoring or reverse factoring).
  */
 @Getter
 @RequiredArgsConstructor

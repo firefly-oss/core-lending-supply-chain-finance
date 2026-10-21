@@ -36,7 +36,7 @@ import java.util.UUID;
 
 /**
  * Unified DTO for supply chain finance invoices.
- * Supports both factoring and confirming invoice workflows.
+ * Invoice under a factoring or reverse factoring agreement.
  */
 @Data
 @Builder

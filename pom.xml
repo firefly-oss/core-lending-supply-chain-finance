@@ -15,7 +15,7 @@
     <packaging>pom</packaging>
 
     <name>Core Lending Supply Chain Finance</name>
-    <description>Unified Supply Chain Finance microservice (Factoring and Confirming)</description>
+    <description>Trade finance core for supply chain finance agreements. Stored product kinds: FACTORING and REVERSE_FACTORING.</description>
 
     <modules>
         <module>core-lending-supply-chain-finance-interfaces</module>

@@ -23,7 +23,7 @@ import org.springframework.data.r2dbc.repository.config.EnableR2dbcRepositories;
 
 /**
  * Main Spring Boot application for Supply Chain Finance microservice.
- * Unified implementation supporting both FACTORING and CONFIRMING.
+ * Trade finance agreements. Stored product kinds are FACTORING and REVERSE_FACTORING.
  */
 @SpringBootApplication(scanBasePackages = "io.fireflysoftware.core.lending.supplychainfinance")
 @EnableR2dbcRepositories(basePackages = "io.fireflysoftware.core.lending.supplychainfinance.models.repositories")

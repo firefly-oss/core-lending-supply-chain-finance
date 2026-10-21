@@ -36,7 +36,7 @@ import java.util.UUID;
 /**
  * DTO for advances/early payments in supply chain finance.
  * In factoring: advance to supplier.
- * In confirming: early payment to supplier.
+ * In reverse factoring: early payment to the supplier.
  */
 @Data
 @Builder

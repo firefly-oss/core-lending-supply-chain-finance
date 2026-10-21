@@ -23,15 +23,16 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 /**
- * Finance type discriminator for supply chain finance products.
- * This enum determines whether a product is FACTORING or CONFIRMING.
+ * Product kind stored on a trade finance agreement.
+ * FACTORING buys receivables. REVERSE_FACTORING pays suppliers after the buyer approves the payable.
+ * Confirming is the Spanish market name for reverse factoring and is accepted on input as that kind.
  */
 @Getter
 @RequiredArgsConstructor
 public enum FinanceTypeEnum {
-    
+
     FACTORING("FACTORING", "Factoring"),
-    CONFIRMING("CONFIRMING", "Confirming");
+    REVERSE_FACTORING("REVERSE_FACTORING", "Reverse factoring");
 
     @JsonValue
     private final String code;
@@ -41,6 +42,9 @@ public enum FinanceTypeEnum {
     public static FinanceTypeEnum fromCode(String code) {
         if (code == null) {
             return null;
+        }
+        if ("CONFIRMING".equalsIgnoreCase(code)) {
+            return REVERSE_FACTORING;
         }
         for (FinanceTypeEnum type : values()) {
             if (type.code.equalsIgnoreCase(code)) {

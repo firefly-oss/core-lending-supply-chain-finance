@@ -34,7 +34,7 @@ import java.util.UUID;
 /**
  * Entity for advances/early payments.
  * In factoring: advance to supplier.
- * In confirming: early payment to supplier.
+ * In reverse factoring: early payment to the supplier.
  */
 @Data
 @Builder

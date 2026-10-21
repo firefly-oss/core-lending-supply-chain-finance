@@ -10,14 +10,14 @@ tags:
   description: Operations for Supply Chain Finance Advances
 - name: Counterparty
   description: Operations for Counterparties (Debtors & Suppliers)
+- name: SupplyChainFinanceAgreement
+  description: "Trade finance agreements. Product kinds: FACTORING and REVERSE_FACTORING."
 - name: SupplyChainFinanceInvoice
   description: Operations for Supply Chain Finance Invoices
 - name: SupplyChainFinanceFee
   description: Operations for Supply Chain Finance Fees
 - name: SupplyChainFinanceSettlement
   description: Operations for Supply Chain Finance Settlements
-- name: SupplyChainFinanceAgreement
-  description: Operations for Supply Chain Finance Agreements (Factoring & Confirming)
 paths:
   /api/v1/supply-chain-finance/settlements/{id}:
     get:
@@ -963,7 +963,7 @@ components:
           type: string
           enum:
           - FACTORING
-          - CONFIRMING
+          - REVERSE_FACTORING
         invoiceId:
           type: string
           format: uuid
@@ -971,18 +971,20 @@ components:
           type: string
           format: date
         currency:
+          pattern: "^[A-Z]{3}$"
           type: string
-          minLength: 3
-          maxLength: 3
-          pattern: ^[A-Z]{3}$
-          description: ISO 4217 currency code
         settlementAmount:
+          minimum: 0
+          exclusiveMinimum: true
           type: number
         advancedAmount:
+          minimum: 0
           type: number
         interestAmount:
+          minimum: 0
           type: number
         feeAmount:
+          minimum: 0
           type: number
         balanceDue:
           type: number
@@ -1015,7 +1017,7 @@ components:
           type: string
           enum:
           - FACTORING
-          - CONFIRMING
+          - REVERSE_FACTORING
         agreementId:
           type: string
           format: uuid
@@ -1033,12 +1035,11 @@ components:
           type: string
           format: date
         currency:
+          pattern: "^[A-Z]{3}$"
           type: string
-          minLength: 3
-          maxLength: 3
-          pattern: ^[A-Z]{3}$
-          description: ISO 4217 currency code
         invoiceAmount:
+          minimum: 0
+          exclusiveMinimum: true
           type: number
         status:
           type: string
@@ -1054,6 +1055,7 @@ components:
           - SETTLED
           - CANCELLED
         financedAmount:
+          minimum: 0
           type: number
         financedDate:
           type: string
@@ -1097,7 +1099,7 @@ components:
           type: string
           enum:
           - FACTORING
-          - CONFIRMING
+          - REVERSE_FACTORING
         agreementId:
           type: string
           format: uuid
@@ -1113,12 +1115,10 @@ components:
           - LATE_PAYMENT_FEE
           - OTHER
         currency:
+          pattern: "^[A-Z]{3}$"
           type: string
-          minLength: 3
-          maxLength: 3
-          pattern: ^[A-Z]{3}$
-          description: ISO 4217 currency code
         fixedAmount:
+          minimum: 0
           type: number
         percentageRate:
           maximum: 100.0
@@ -1127,8 +1127,10 @@ components:
           exclusiveMinimum: false
           type: number
         minimumAmount:
+          minimum: 0
           type: number
         maximumAmount:
+          minimum: 0
           type: number
         description:
           maxLength: 500
@@ -1152,11 +1154,10 @@ components:
           type: string
           enum:
           - FACTORING
-          - CONFIRMING
+          - REVERSE_FACTORING
         partyId:
           type: string
           format: uuid
-          description: Party in customer management. This row is a role on the agreement, not a customer master.
         counterpartyName:
           maxLength: 255
           minLength: 0
@@ -1189,8 +1190,10 @@ components:
         approved:
           type: boolean
         approvedLimit:
+          minimum: 0
           type: number
         currentExposure:
+          minimum: 0
           type: number
         creditRating:
           maxLength: 50
@@ -1218,7 +1221,7 @@ components:
           type: string
           enum:
           - FACTORING
-          - CONFIRMING
+          - REVERSE_FACTORING
         agreementNumber:
           maxLength: 100
           minLength: 0
@@ -1242,16 +1245,16 @@ components:
           type: string
           format: date
         currency:
+          pattern: "^[A-Z]{3}$"
           type: string
-          minLength: 3
-          maxLength: 3
-          pattern: ^[A-Z]{3}$
-          description: ISO 4217 currency code
         creditLimit:
+          minimum: 0
           type: number
         availableLimit:
+          minimum: 0
           type: number
         outstandingAmount:
+          minimum: 0
           type: number
         recourse:
           type: boolean
@@ -1266,9 +1269,13 @@ components:
         supplierEarlyPaymentOption:
           type: boolean
         standardPaymentTermDays:
+          minimum: 0
+          exclusiveMinimum: true
           type: integer
           format: int32
         earlyPaymentDiscountDays:
+          minimum: 0
+          exclusiveMinimum: true
           type: integer
           format: int32
         interestRate:
@@ -1304,7 +1311,7 @@ components:
           type: string
           enum:
           - FACTORING
-          - CONFIRMING
+          - REVERSE_FACTORING
         invoiceId:
           type: string
           format: uuid
@@ -1312,18 +1319,20 @@ components:
           type: string
           format: date
         currency:
+          pattern: "^[A-Z]{3}$"
           type: string
-          minLength: 3
-          maxLength: 3
-          pattern: ^[A-Z]{3}$
-          description: ISO 4217 currency code
         advanceAmount:
+          minimum: 0
+          exclusiveMinimum: true
           type: number
         discountAmount:
+          minimum: 0
           type: number
         feeAmount:
+          minimum: 0
           type: number
         netAmount:
+          minimum: 0
           type: number
         paymentReference:
           maxLength: 100

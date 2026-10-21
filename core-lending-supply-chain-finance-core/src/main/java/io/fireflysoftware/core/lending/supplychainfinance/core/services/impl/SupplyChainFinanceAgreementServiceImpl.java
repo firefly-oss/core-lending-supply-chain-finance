@@ -126,8 +126,8 @@ public class SupplyChainFinanceAgreementServiceImpl implements SupplyChainFinanc
 
         if (dto.getFinanceType() == FinanceTypeEnum.FACTORING) {
             return validateFactoringFields(dto);
-        } else if (dto.getFinanceType() == FinanceTypeEnum.CONFIRMING) {
-            return validateConfirmingFields(dto);
+        } else if (dto.getFinanceType() == FinanceTypeEnum.REVERSE_FACTORING) {
+            return validateReverseFactoringFields(dto);
         }
 
         return Mono.empty();
@@ -146,16 +146,15 @@ public class SupplyChainFinanceAgreementServiceImpl implements SupplyChainFinanc
         return Mono.empty();
     }
 
-    private Mono<Void> validateConfirmingFields(SupplyChainFinanceAgreementDTO dto) {
-        // Confirming-specific validation
+    private Mono<Void> validateReverseFactoringFields(SupplyChainFinanceAgreementDTO dto) {
         if (dto.getSupplierEarlyPaymentOption() == null) {
-            return Mono.error(new IllegalArgumentException("Supplier early payment option is required for confirming agreements"));
+            return Mono.error(new IllegalArgumentException("Supplier early payment option is required for reverse factoring agreements"));
         }
         if (dto.getStandardPaymentTermDays() == null) {
-            return Mono.error(new IllegalArgumentException("Standard payment term days is required for confirming agreements"));
+            return Mono.error(new IllegalArgumentException("Standard payment term days is required for reverse factoring agreements"));
         }
 
-        log.debug("Validated confirming-specific fields for agreement");
+        log.debug("Validated reverse factoring fields for agreement");
         return Mono.empty();
     }
 }

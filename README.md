@@ -17,7 +17,16 @@ Developed by the Firefly Software Foundation. [dev@fireflysoftware.io](mailto:de
 [![Java](https://img.shields.io/badge/Java-25-orange.svg)](https://openjdk.java.net/)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-brightgreen.svg)](https://spring.io/projects/spring-boot)
 
-A unified microservice for managing both **factoring** and **confirming** supply chain finance operations within the Firefly lending platform.
+Trade finance core for supply chain finance. One agreement stores every product kind in the catalog below. Factoring buys receivables. Reverse factoring pays suppliers after the buyer approves the payable. Confirming is the Spanish market name for reverse factoring; the stored value is `REVERSE_FACTORING`.
+
+## Product kinds
+
+| Kind | What the agreement stores |
+|------|---------------------------|
+| `FACTORING` | Purchase of the supplier's receivables. Requires recourse and an advance rate. |
+| `REVERSE_FACTORING` | Payment to the supplier against the buyer's approval. Requires the supplier early-payment option and standard payment term days. |
+
+An inbound value of `CONFIRMING` is accepted and stored as `REVERSE_FACTORING`. The stored product kinds are `FACTORING` and `REVERSE_FACTORING`.
 
 ---
 
@@ -55,11 +64,11 @@ A unified microservice for managing both **factoring** and **confirming** supply
 
 ## Overview
 
-This microservice consolidates the previously separate `core-lending-factoring` and `core-lending-confirming` services into a single, unified codebase. The two modules shared approximately 85% of their code, making this merge a significant improvement in maintainability and consistency.
+This microservice is the trade finance family for receivables and payables finance. Factoring and reverse factoring share one agreement aggregate.
 
 **Key Benefits:**
-- 85% code reduction through elimination of duplication
-- Unified API for both factoring and confirming
+- One agreement for both trade finance product kinds
+- Unified API for factoring and reverse factoring
 - Single deployment reduces operational complexity
 - Easier maintenance with one codebase
 - Consistent business logic across finance types
@@ -70,10 +79,10 @@ This microservice consolidates the previously separate `core-lending-factoring` 
 
 The **Core Lending Supply Chain Finance** microservice is responsible for:
 
-1. **Managing Supply Chain Finance Agreements** - Creating and maintaining both factoring and confirming agreements with customers
-2. **Counterparty Management** - Managing debtors (in factoring) and suppliers (in confirming) with credit limits and exposure tracking
+1. **Managing Supply Chain Finance Agreements** - Creating and maintaining factoring and reverse factoring agreements
+2. **Counterparty Management** - Managing debtors (in factoring) and suppliers (in reverse factoring) with credit limits and exposure tracking
 3. **Invoice Processing** - Handling invoice registration, verification, approval, and financing workflows
-4. **Advance/Early Payment Processing** - Managing advances to suppliers in factoring and early payments to suppliers in confirming
+4. **Advance/Early Payment Processing** - Managing advances to suppliers in factoring and early payments to suppliers in reverse factoring
 5. **Fee Management** - Configuring and tracking various fee structures (discount fees, service fees, administration fees, etc.)
 6. **Settlement Processing** - Managing final settlement of invoices including interest, fees, and balance calculations
 7. **Credit Limit Monitoring** - Tracking available limits, outstanding amounts, and counterparty exposure
@@ -115,10 +124,10 @@ The complete lifecycle of a supply chain finance operation follows this flow:
 8. Invoice Status: SETTLED
 ```
 
-#### Confirming Flow
+#### Reverse factoring flow
 
 ```
-1. Agreement Created (CONFIRMING)
+1. Agreement Created (REVERSE_FACTORING)
    ↓
 2. Supplier (Counterparty) Registered & Approved
    ↓
@@ -147,9 +156,9 @@ The complete lifecycle of a supply chain finance operation follows this flow:
 
 **Key Differences:**
 - **Factoring**: Supplier sells receivables to factor; factor advances funds and collects from debtor
-- **Confirming**: Buyer confirms invoices; supplier can request early payment; buyer pays at standard terms
-- **Counterparty Role**: In factoring = debtor (who owes); In confirming = supplier (who is owed)
-- **Risk**: Factoring can be recourse or non-recourse; Confirming is typically non-recourse to supplier
+- **Reverse factoring**: The buyer approves invoices; the supplier can request early payment; the buyer pays at standard terms
+- **Counterparty Role**: In factoring, the counterparty is the debtor. In reverse factoring, the counterparty is the supplier.
+- **Risk**: Factoring can be recourse or non-recourse. Reverse factoring is typically non-recourse to the supplier.
 
 ---
 
@@ -187,7 +196,7 @@ core-lending-supply-chain-finance/
 
 ### Key Design Principles
 
-1. **Finance Type Discriminator**: The unified model uses a `financeType` field (`FACTORING` or `CONFIRMING`) to distinguish between use cases, allowing shared infrastructure while maintaining business logic flexibility.
+1. **Finance Type Discriminator**: The agreement stores `financeType` as `FACTORING` or `REVERSE_FACTORING`. Those are the only trade finance product kinds on this core.
 
 2. **Reactive Programming**: Built on Spring WebFlux and R2DBC for non-blocking, scalable operations.
 
@@ -212,7 +221,7 @@ erDiagram
 
     SUPPLY_CHAIN_FINANCE_AGREEMENT {
         uuid id PK
-        finance_type_enum finance_type "NOT NULL - FACTORING or CONFIRMING"
+        finance_type finance_type "NOT NULL - FACTORING or REVERSE_FACTORING"
         varchar agreement_number "NOT NULL - Unique agreement number"
         uuid loan_servicing_case_id FK "NOT NULL - Reference to LoanServicingCase"
         agreement_status_enum status "NOT NULL - Agreement status"
@@ -225,9 +234,9 @@ erDiagram
         boolean recourse "NULLABLE - Factoring: with/without recourse"
         boolean notification_required "NULLABLE - Factoring: debtor notification"
         decimal advance_rate "NULLABLE - Factoring: advance percentage"
-        boolean supplier_early_payment_option "NULLABLE - Confirming: early payment available"
-        integer standard_payment_term_days "NULLABLE - Confirming: standard payment terms"
-        integer early_payment_discount_days "NULLABLE - Confirming: early payment discount period"
+        boolean supplier_early_payment_option "NULLABLE - Reverse factoring: early payment available"
+        integer standard_payment_term_days "NULLABLE - Reverse factoring: standard payment terms"
+        integer early_payment_discount_days "NULLABLE - Reverse factoring: early payment discount period"
         decimal interest_rate "NULLABLE - Annual interest rate"
         text notes "NULLABLE"
         uuid created_by FK "NOT NULL"
@@ -333,11 +342,11 @@ erDiagram
 
 #### SupplyChainFinanceAgreement
 
-The core entity representing a factoring or confirming agreement.
+The agreement for a factoring or reverse factoring product.
 
 **Key Fields:**
 - `id` (UUID, PK): Unique identifier
-- `financeType` (FinanceTypeEnum): FACTORING or CONFIRMING
+- `financeType` (FinanceTypeEnum): FACTORING or REVERSE_FACTORING
 - `agreementNumber` (String): Unique agreement number (max 100 chars)
 - `loanServicingCaseId` (UUID, FK): Reference to LoanServicingCase in loan-servicing microservice (contains party/customer information)
 - `status` (AgreementStatusEnum): Current status of the agreement
@@ -353,7 +362,7 @@ The core entity representing a factoring or confirming agreement.
 - `notificationRequired` (Boolean): Whether debtor notification is required
 - `advanceRate` (BigDecimal): Percentage of invoice value advanced (0-100)
 
-**Confirming-Specific Fields:**
+**Reverse factoring fields:**
 - `supplierEarlyPaymentOption` (Boolean): Whether early payment is available
 - `standardPaymentTermDays` (Integer): Standard payment terms in days
 - `earlyPaymentDiscountDays` (Integer): Early payment discount period in days
@@ -369,12 +378,12 @@ The core entity representing a factoring or confirming agreement.
 
 #### Counterparty
 
-Represents debtors in factoring or suppliers in confirming.
+Represents debtors in factoring or suppliers in reverse factoring.
 
 **Key Fields:**
 - `id` (UUID, PK): Unique identifier
 - `agreementId` (UUID, FK): Parent agreement
-- `financeType` (FinanceTypeEnum): FACTORING or CONFIRMING
+- `financeType` (FinanceTypeEnum): FACTORING or REVERSE_FACTORING
 - `partyId` (UUID): Party in customer management. Name, tax id, and registration number on this row are labels
 - `counterpartyName` (String): Optional label for the counterparty (max 200 chars)
 - `taxId` (String): Tax identification number (max 50 chars)
@@ -394,11 +403,11 @@ Represents debtors in factoring or suppliers in confirming.
 
 #### SupplyChainFinanceInvoice
 
-Represents invoices in both factoring and confirming workflows.
+Represents invoices in both factoring and reverse factoring workflows.
 
 **Key Fields:**
 - `id` (UUID, PK): Unique identifier
-- `financeType` (FinanceTypeEnum): FACTORING or CONFIRMING
+- `financeType` (FinanceTypeEnum): FACTORING or REVERSE_FACTORING
 - `agreementId` (UUID, FK): Parent agreement
 - `counterpartyId` (UUID, FK): Related counterparty (debtor/supplier)
 - `invoiceNumber` (String): Invoice number (max 100 chars)
@@ -422,11 +431,11 @@ Represents invoices in both factoring and confirming workflows.
 
 #### SupplyChainFinanceAdvance
 
-Represents advances to suppliers in factoring or early payments in confirming.
+Represents advances to suppliers in factoring or early payments in reverse factoring.
 
 **Key Fields:**
 - `id` (UUID, PK): Unique identifier
-- `financeType` (FinanceTypeEnum): FACTORING or CONFIRMING
+- `financeType` (FinanceTypeEnum): FACTORING or REVERSE_FACTORING
 - `invoiceId` (UUID, FK): Related invoice
 - `advanceDate` (LocalDate): Date of advance/early payment
 - `currency` (ISO 4217 code): Currency
@@ -446,7 +455,7 @@ Represents fee structures for agreements.
 
 **Key Fields:**
 - `id` (UUID, PK): Unique identifier
-- `financeType` (FinanceTypeEnum): FACTORING or CONFIRMING
+- `financeType` (FinanceTypeEnum): FACTORING or REVERSE_FACTORING
 - `agreementId` (UUID, FK): Parent agreement
 - `feeType` (FeeTypeEnum): Type of fee
 - `currency` (ISO 4217 code): Currency
@@ -466,7 +475,7 @@ Represents final settlement of invoices.
 
 **Key Fields:**
 - `id` (UUID, PK): Unique identifier
-- `financeType` (FinanceTypeEnum): FACTORING or CONFIRMING
+- `financeType` (FinanceTypeEnum): FACTORING or REVERSE_FACTORING
 - `invoiceId` (UUID, FK): Related invoice
 - `settlementDate` (LocalDate): Settlement date
 - `currency` (ISO 4217 code): Currency
@@ -485,11 +494,11 @@ Represents final settlement of invoices.
 
 #### FinanceTypeEnum
 
-Distinguishes between factoring and confirming operations.
+Product kind stored on the trade finance agreement.
 
 **Values:**
-- `FACTORING`: Invoice factoring
-- `CONFIRMING`: Reverse factoring / Confirming
+- `FACTORING`: The financier buys receivables
+- `REVERSE_FACTORING`: The financier pays the supplier against the buyer's approval (payables finance; called confirming in Spanish)
 
 **Package:** `io.fireflysoftware.core.lending.supplychainfinance.interfaces.enums`
 
@@ -524,7 +533,7 @@ Represents the current status of an invoice.
 - `APPROVED`: Invoice has been approved (factoring)
 - `REJECTED`: Invoice was rejected
 - `FINANCED`: Invoice has been financed/advanced
-- `CONFIRMED`: Invoice has been confirmed (confirming)
+- `CONFIRMED`: Invoice has been approved by the buyer (reverse factoring)
 - `PAID`: Invoice has been paid by debtor/buyer
 - `SETTLED`: Invoice has been fully settled
 - `CANCELLED`: Invoice was cancelled
@@ -542,7 +551,7 @@ Categorizes different types of fees.
 - `SERVICE_FEE`: Service fee
 - `ADMINISTRATION_FEE`: Administration fee
 - `VERIFICATION_FEE`: Invoice verification fee
-- `EARLY_PAYMENT_FEE`: Early payment fee (confirming)
+- `EARLY_PAYMENT_FEE`: Early payment fee (reverse factoring)
 - `COLLECTION_FEE`: Collection fee
 - `LATE_PAYMENT_FEE`: Late payment penalty fee
 - `OTHER`: Other fees
