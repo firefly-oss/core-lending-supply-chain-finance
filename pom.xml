@@ -7,7 +7,7 @@
     <parent>
         <groupId>io.fireflysoftware</groupId>
         <artifactId>firefly-parent</artifactId>
-        <version>26.10.5</version>
+        <version>26.10.6</version>
         <relativePath/>
     </parent>
 
@@ -30,7 +30,7 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.compiler.release>${java.version}</maven.compiler.release>
-        <core-lending-supply-chain-finance.version>26.10.5</core-lending-supply-chain-finance.version>
+        <core-lending-supply-chain-finance.version>26.10.6</core-lending-supply-chain-finance.version>
     </properties>
 
     <dependencyManagement>
